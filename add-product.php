@@ -8,21 +8,16 @@ $client = new Client([
         'base_uri' => 'https://dummyjson.com/'
 ]);
 
-// $response = $client->get('products');
-// $code = $response->getStatusCode();
-// $body = $response->getBody();
-// $products = json_decode($body) -> products;
-
-$response = $client->request('POST', 'products', 
-['id' => '999',
-'title' => 'Xbox',
-'description' => 'Xbox 360',
-'brand' => 'Microsoft',
-'category' => 'Console',
-'thumbnail' => 'thumbnail.jpg'
-]
-);
-
-$body = $response->getBody();
-var_dump($body);
+$product = [
+        'json' => [
+                'id' => '101',
+                'title' => 'Xbox',
+                'description' => 'Xbox 360',
+                'brand' => 'Microsoft',
+                'category' => 'Console',
+                'thumbnail' => 'thumbnail.jpg'
+           ]
+       ]; 
+    $response = $client->post('products/add', $product);
+    echo $response->getBody();
 ?>
