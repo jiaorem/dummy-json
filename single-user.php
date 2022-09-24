@@ -2,16 +2,15 @@
 require "vendor/autoload.php";
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Request;
 
 $client = new Client([
         'base_uri' => 'https://dummyjson.com/'
 ]);
-$id = $_GET['product_id'];
-$response = $client->get('products/' . $id);
+$id = $_GET['user_id'];
+$response = $client->get('users/' . $id);
 $code = $response->getStatusCode();
 $body = $response->getBody();
-$product = json_decode($body);
+$user = json_decode($body);
 ?>
 
 <!DOCTYPE html>
@@ -99,7 +98,6 @@ $product = json_decode($body);
 <header>
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Cart</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -115,10 +113,6 @@ $product = json_decode($body);
             <a class="nav-link disabled"></a>
           </li>
         </ul>
-        <form action="search-products.php" method="POST">
-            <input type="text" placeholder="Search for a product" name="product-name">
-            <button type="submit"><i class="fa fa-search"></i></button>
-        </form>
       </div>
     </div>
   </nav>
@@ -129,7 +123,7 @@ $product = json_decode($body);
     <div class="container py-5">
         <div class="row text-center text-white mb-5">
             <div class="col-lg-7 mx-auto">
-                <h1 class="display-4" style="color:black">Product List</h1>
+                <h1 class="display-4" style="color:black">Single User</h1>
             </div>
         </div>
         <div class="row">
@@ -138,19 +132,19 @@ $product = json_decode($body);
                 <ul class="list-group shadow">
                     <!-- list group item-->
                     <li class="list-group-item">
-                        <!-- Custom content-->
-                        <div class="media align-items-lg-center flex-column flex-lg-row p-3">
-                        <div class="media-body order-2 order-lg-1">
-                          <p class="font-italic text-muted mb-0 small"><?php echo $product->id?></p>
-                            <h5 class="mt-0 font-weight-bold mb-2"><?php echo $product->title?></h5>
-                            <p class="font-italic text-muted mb-0 small"><?php echo $product->description?></p>
-                            <p class="font-italic text-muted mb-0 small"><?php echo $product->brand?></p>
-                            <p class="font-italic text-muted mb-0 small"><?php echo $product->category?></p>
-                            <div class="d-flex align-items-center justify-content-between mt-1">
-                                <h6 class="font-weight-bold my-2">$   <?php echo $product->price?></h6>
-                            </div>
-                        </div><img src="<?php echo $product->thumbnail?>" href="single-product.php" alt="Generic placeholder image" width="200" height="200" class="ml-lg-5 order-1 order-lg-2">
-                        </div> <!-- End -->
+                            <div class="media align-items-lg-center flex-column flex-lg-row p-3">
+                            <div class="media-body order-2 order-lg-1">
+                                <?php $complete_name = $user->firstName . " " . $user->maidenName . " " . $user->lastName; ?>
+                                <p class="font-italic text-muted mb-0 small"><?php echo $complete_name?></p>
+                                <h5 class="mt-0 font-weight-bold mb-2"><?php echo $user->age?></h5>
+                                <p class="font-italic text-muted mb-0 small"><?php echo $user->gender?></p>
+                                <p class="font-italic text-muted mb-0 small"><?php echo $user->email?></p>
+                                <p class="font-italic text-muted mb-0 small"><?php echo $user->phone?></p>
+                                <div class="d-flex align-items-center justify-content-between mt-1">
+                                    <h6 class="font-weight-bold my-2">$   <?php echo $user->bloodGroup?></h6>
+                                </div></div>
+                                <img src="<?php echo $user->image?>" href="single-product.php" alt="Generic placeholder image" width="200" height="200" class="ml-lg-5 order-1 order-lg-2">
+                            </div> <!-- End -->
                     </li> <!-- End -->
                 </ul> <!-- End -->
             </div>

@@ -6,7 +6,7 @@ use GuzzleHttp\Client;
 $client = new Client([
         'base_uri' => 'https://dummyjson.com/'
 ]);
-$search = $_POST['product-name'];
+$search = $_POST['product_name'];
 
 $response = $client->get('products/search?q=' . $search);
 $code = $response->getStatusCode();
@@ -70,7 +70,7 @@ $products = json_decode($body, true);
               </li>
             </ul>
             <form action="search-products.php" method="POST">
-              <input type="text" placeholder="Search for a product" name="product-name">
+              <input type="text" placeholder="Search for a product" name="product_name">
               <button type="submit"><i class="fa fa-search"></i></button>
             </form>
         </div>
@@ -92,9 +92,7 @@ $products = json_decode($body, true);
                         <!-- list group item-->
                         <li class="list-group-item">
                             <!-- Custom content-->
-                            <?php foreach ($products as $items){ 
-                                    foreach ($items as $product){
-                                      ?>
+                            <?php foreach ($products['products'] as $product){ ?>
                             <div class="media align-items-lg-center flex-column flex-lg-row p-3">
                             <div class="media-body order-2 order-lg-1">
                               <p class="font-italic text-muted mb-0 small"<?php echo $product['id'];?></p>
@@ -107,7 +105,7 @@ $products = json_decode($body, true);
                                 </div>
                             </div><img src="<?php echo $product['thumbnail'];?>" href="single-product.php" alt="Generic placeholder image" width="200" height="200" class="ml-lg-5 order-1 order-lg-2">
                             </div> <!-- End -->
-                            <?php }}?>
+                            <?php }?>
                         </li> <!-- End -->
                     </ul> <!-- End -->
                 </div>

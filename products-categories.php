@@ -2,17 +2,17 @@
 require "vendor/autoload.php";
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Request;
 
 $client = new Client([
         'base_uri' => 'https://dummyjson.com/'
 ]);
-$id = $_GET['product_id'];
-$response = $client->get('products/' . $id);
+
+$response = $client->get('products/categories');
 $code = $response->getStatusCode();
 $body = $response->getBody();
-$product = json_decode($body);
+$categories = json_decode($body);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
@@ -36,61 +36,6 @@ $product = json_decode($body);
     <link rel="icon" href="/docs/5.2/assets/img/favicons/favicon.ico">
     <meta name="theme-color" content="#712cf9">
 
-
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-
-      .b-example-divider {
-        height: 3rem;
-        background-color: rgba(0, 0, 0, .1);
-        border: solid rgba(0, 0, 0, .15);
-        border-width: 1px 0;
-        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-      }
-
-      .b-example-vr {
-        flex-shrink: 0;
-        width: 1.5rem;
-        height: 100vh;
-      }
-
-      .bi {
-        vertical-align: -.125em;
-        fill: currentColor;
-      }
-
-      .nav-scroller {
-        position: relative;
-        z-index: 2;
-        height: 2.75rem;
-        overflow-y: hidden;
-      }
-
-      .nav-scroller .nav {
-        display: flex;
-        flex-wrap: nowrap;
-        padding-bottom: 1rem;
-        margin-top: -1px;
-        overflow-x: auto;
-        text-align: center;
-        white-space: nowrap;
-        -webkit-overflow-scrolling: touch;
-      }
-    </style>
-
-    
     <!-- Custom styles for this template -->
     <link href="../carousel/carousel.rtl.css" rel="stylesheet">
   </head>
@@ -129,7 +74,7 @@ $product = json_decode($body);
     <div class="container py-5">
         <div class="row text-center text-white mb-5">
             <div class="col-lg-7 mx-auto">
-                <h1 class="display-4" style="color:black">Product List</h1>
+                <h1 class="display-4" style="color:black" >Product List</h1>
             </div>
         </div>
         <div class="row">
@@ -137,21 +82,12 @@ $product = json_decode($body);
                 <!-- List group-->
                 <ul class="list-group shadow">
                     <!-- list group item-->
+                    <?php foreach ($categories as $category){ ?>
                     <li class="list-group-item">
                         <!-- Custom content-->
-                        <div class="media align-items-lg-center flex-column flex-lg-row p-3">
-                        <div class="media-body order-2 order-lg-1">
-                          <p class="font-italic text-muted mb-0 small"><?php echo $product->id?></p>
-                            <h5 class="mt-0 font-weight-bold mb-2"><?php echo $product->title?></h5>
-                            <p class="font-italic text-muted mb-0 small"><?php echo $product->description?></p>
-                            <p class="font-italic text-muted mb-0 small"><?php echo $product->brand?></p>
-                            <p class="font-italic text-muted mb-0 small"><?php echo $product->category?></p>
-                            <div class="d-flex align-items-center justify-content-between mt-1">
-                                <h6 class="font-weight-bold my-2">$   <?php echo $product->price?></h6>
-                            </div>
-                        </div><img src="<?php echo $product->thumbnail?>" href="single-product.php" alt="Generic placeholder image" width="200" height="200" class="ml-lg-5 order-1 order-lg-2">
-                        </div> <!-- End -->
+                        <div><p href="#" class="font-italic text-muted mb-0 small"><?php echo $category?></p></div>
                     </li> <!-- End -->
+                    <?php }?>
                 </ul> <!-- End -->
             </div>
         </div>
